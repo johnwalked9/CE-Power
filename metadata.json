@@ -1,0 +1,8 @@
+{
+  "name": "CE Generator and Pump",
+  "description": "Premium industrial generator and pump catalog with AI-powered assistance, live voice interaction, and design tools.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
