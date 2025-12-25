@@ -54,7 +54,7 @@ export const sendMessage = async (
   
   let model = 'gemini-3-pro-preview';
   if (options.useSearch) {
-    model = 'gemini-2.5-flash'; // Flash for search grounding
+    model = 'gemini-3-flash-preview'; // Updated to latest model for search grounding
   }
 
   const config: any = {
