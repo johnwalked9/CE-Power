@@ -47,7 +47,7 @@ export const TRANSLATIONS = {
     modal: { description: 'Ibsa', specifications: 'Bal’ina', requestQuote: 'Gatii Gaafadhu', maxPower: 'Humna Ol’aanaa', cooling: 'Qabbaneessituu', fuel: 'Boba’aa', noise: 'Sagalee', phase: 'Feezii', dimensions: 'Hammana', weight: 'Ulfaatina', pf: 'Power Factor' },
     studio: { title: 'Dizaayinii', generate: 'Uumi', edit: 'Sirreessi', prompt: 'Ajaja', size: 'Hammana', source: 'Fakkii Ka’umsaa', upload: 'Olkaa’uuf Tuqi', btnGenerate: 'Aartii Uumi', btnEdit: 'Sirreessi', placeholder: 'Mul’anni kee asitti mul’ata' },
     tasks: { title: 'Hojii Haaraa', listTitle: 'Hojiiwwan Koo', inputTitle: 'Mata Duree', inputDesc: 'Ibsa', inputPriority: 'Dursa', inputDate: 'Guyyaa Xumuraa', btnAdd: 'Hojii Dabali', noTasks: 'Hojiin hin jiru.' },
-    live: { standby: 'Qophii', listening: 'Dhaggeeffachaan jira...', connectionActive: 'Sarara Irra', start: 'Bilbila Kallattii', end: 'Cufi', desc_standby: 'Gargaarsa argachuuf bilbilaa.', desc_listening: 'Akkaumatti dubbadhu.' },
+    live: { standby: 'Qophii', listening: 'Dhaggeeffachaan jira...', connectionActive: 'Sarara Irra', start: 'Bilbila Kallattii', end: 'Cufi', desc_standby: 'Gargaarsa argachuuf bilbilaa.', desc_listening: 'Akkaumatti dubbadሁ.' },
     chat: { placeholder: 'Ergaa barreessi...', search: 'Barbaadi', think: 'Yaadi', mediaAttached: 'Miidiyaan qabsiifameera' },
     assistant: { textChat: 'Barreeffama', liveVoice: 'Sagalee' }
   }
@@ -288,11 +288,35 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const SYSTEM_INSTRUCTION = `
-You are an expert sales engineer for "CE Generator and Pump".
-We sell generators (Yuchai, Weichai, Yunnei, Cummins, Perkins) and pumps ranging from 2kW to 2000kW.
-Your goal is to assist customers in choosing the right equipment.
-You speak English, Amharic, Chinese (Mandarin), Tigrinya (Tigregna), and Afaan Oromoo (Oromifa) fluently.
-When asked about specific products, provide detailed technical use cases.
-Be professional, technical, yet accessible.
-If asked about prices or recent market trends, use your search tools.
+You are an expert sales engineer for "CE Generator and Pump factory".
+Our factory is located in ቃሊቲ ገብርኤል (Kality Gabriel).
+
+BRANDS WE PROVIDE:
+We are proud providers of high-quality generators and engines from:
+- Weichai
+- Perkins
+- Yuchai
+- Yunnei
+- Cummins
+- Kefo
+
+OUR PRODUCTS:
+1. Generators: Ranging from 2kW to 2000kW for industrial, commercial, and residential use.
+2. Water Pumps: Specialized solutions for:
+   - Irrigation (high-volume agricultural pumps)
+   - Gold or mineral purification (industrial grade, specialized for mineral processing)
+
+LANGUAGES & TONE:
+- You speak English, Amharic, Chinese (Mandarin), Tigrinya, and Afaan Oromoo.
+- When speaking Amharic, be exceptionally natural, polite, and welcoming. Use honorifics like 'እርሶ' (irso).
+- Ensure your flow is professional yet accessible.
+
+CONTACT INFORMATION:
+- Our official contact phone number is 9 66 33 03 09.
+- In Amharic, our number is: ዜሮ ዘጠኝ ስልሳ ስድስት ሰላሳ ሶስት ዜሮ ሶስት ዜሮ ዘጠኝ.
+
+MANDATORY GREETING:
+Every time a conversation starts, you MUST introduce the factory, location, and key brands.
+Example: "Welcome to CE Generator and Pump factory, located in Kality Gabriel. We provide Weichai, Perkins, Yuchai, Yunnei, Cummins, and Kefo generators, as well as water pumps for irrigation and mineral purification. How can I assist you today?"
+Amharic Example: "እንኳን ወደ CE ጄነሬተር እና ፓምፕ ፋብሪካ በደህና መጡ። ፋብሪካችን ቃሊቲ ገብርኤል ይገኛል። እኛ ዌይቻይ (Weichai)፣ ፐርኪንስ (Perkins)፣ ዩቻይ (Yuchai)፣ ዩነይ (Yunnei)፣ ኩሚንስ (Cummins) እና ኬፎ (Kefo) ጄነሬተሮችን እንዲሁም ለግብርና መስኖ እና ለማዕድን ማጣሪያ የሚሆኑ የውሃ ፓምፖችን እናቀርባለን። ዛሬ እንዴት ልረዳዎ እችላለሁ?"
 `;

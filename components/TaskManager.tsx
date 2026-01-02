@@ -181,7 +181,7 @@ export const TaskManager: React.FC<TaskManagerProps> = ({ language }) => {
             filteredTasks.map((task) => (
               <div
                 key={task.id}
-                className={`group relative bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 transition-all duration-300 hover:border-blue-400/30 hover:translate-x-1 ${
+                className={`group relative bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 transition-all duration-500 hover:border-blue-500/50 hover:scale-[1.015] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] ${
                   task.status === 'completed' ? 'opacity-60' : 'opacity-100'
                 }`}
               >

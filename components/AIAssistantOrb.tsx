@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, Mic, X, Cog } from 'lucide-react';
+import { MessageSquare, Mic, X, Cog, Phone } from 'lucide-react';
 import { GeminiAssistant } from './GeminiAssistant';
 import { LiveSession } from './LiveSession';
 import { ChatMessage, Language } from '../types';
@@ -39,6 +39,10 @@ export const AIAssistantOrb: React.FC<AIAssistantOrbProps> = ({ chatMessages, se
               </div>
               <div className="hidden md:block">
                 <h2 className="text-white font-bold tracking-wider">CE ASSISTANT</h2>
+                <div className="flex items-center gap-1.5 opacity-80">
+                  <Phone className="w-3 h-3 text-blue-400" />
+                  <span className="text-[10px] font-mono text-blue-200">0966330309</span>
+                </div>
               </div>
             </div>
 
@@ -94,26 +98,34 @@ export const AIAssistantOrb: React.FC<AIAssistantOrbProps> = ({ chatMessages, se
 
       {/* Floating Orb Trigger (Only visible when closed) */}
       {!isOpen && (
-        <button
-          onClick={toggleOpen}
-          className="fixed bottom-8 right-8 z-50 group flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-600 via-blue-600 to-purple-600 shadow-[0_0_50px_rgba(59,130,246,0.5)] hover:shadow-[0_0_80px_rgba(59,130,246,0.8)] border border-white/30 transition-all duration-500 hover:scale-110 animate-float cursor-pointer"
-        >
-          <div className="relative w-full h-full flex items-center justify-center rounded-full overflow-hidden">
-             {/* Glass shine */}
-            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/30 to-transparent"></div>
-            
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-20 animate-pulse"></div>
-            
-            {/* Engine Cog */}
-            <Cog className="w-10 h-10 text-white drop-shadow-lg group-hover:rotate-90 transition-transform duration-700 relative z-10" strokeWidth={2} />
-            
-            {/* Call Center Mic Overlay */}
-            <div className="absolute -bottom-1 -right-1 bg-red-500 rounded-full p-2.5 border-[3px] border-slate-900 shadow-lg z-20">
-                <Mic className="w-4 h-4 text-white" />
-            </div>
+        <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3 group">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+             <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-2xl flex items-center gap-2 shadow-2xl">
+                <Phone className="w-3.5 h-3.5 text-blue-400" />
+                <span className="text-xs font-mono text-white">0966330309</span>
+             </div>
           </div>
-        </button>
+          <button
+            onClick={toggleOpen}
+            className="w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-600 via-blue-600 to-purple-600 shadow-[0_0_50px_rgba(59,130,246,0.5)] hover:shadow-[0_0_80px_rgba(59,130,246,0.8)] border border-white/30 transition-all duration-500 hover:scale-110 animate-float cursor-pointer"
+          >
+            <div className="relative w-full h-full flex items-center justify-center rounded-full overflow-hidden">
+               {/* Glass shine */}
+              <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/30 to-transparent"></div>
+              
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-20 animate-pulse"></div>
+              
+              {/* Engine Cog */}
+              <Cog className="w-10 h-10 text-white drop-shadow-lg group-hover:rotate-90 transition-transform duration-700 relative z-10" strokeWidth={2} />
+              
+              {/* Call Center Mic Overlay */}
+              <div className="absolute -bottom-1 -right-1 bg-red-500 rounded-full p-2.5 border-[3px] border-slate-900 shadow-lg z-20">
+                  <Mic className="w-4 h-4 text-white" />
+              </div>
+            </div>
+          </button>
+        </div>
       )}
     </>
   );

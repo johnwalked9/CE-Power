@@ -54,7 +54,7 @@ export const sendMessage = async (
   
   let model = 'gemini-3-pro-preview';
   if (options.useSearch) {
-    model = 'gemini-3-flash-preview'; // Updated to latest model for search grounding
+    model = 'gemini-3-flash-preview';
   }
 
   const config: any = {
@@ -63,17 +63,14 @@ export const sendMessage = async (
 
   if (options.useThinking && !options.useSearch) {
     config.thinkingConfig = { thinkingBudget: 32768 };
-    // DO NOT set maxOutputTokens when thinking is on, as per guidelines
   }
 
   if (options.useSearch) {
     config.tools = [{ googleSearch: {} }];
   }
 
-  // Construct parts
   const currentParts: any[] = [];
   
-  // Attach images
   imageParts.forEach(img => {
     currentParts.push({
       inlineData: {
@@ -83,7 +80,6 @@ export const sendMessage = async (
     });
   });
 
-  // Attach video
   if (videoPart) {
     currentParts.push({
       inlineData: {
@@ -91,7 +87,6 @@ export const sendMessage = async (
         data: videoPart.data
       }
     });
-    // Video understanding uses Pro model
     model = 'gemini-3-pro-preview';
   }
 
@@ -125,10 +120,8 @@ export const generateImage = async (
   size: '1K' | '2K' | '4K'
 ): Promise<string> => {
   const isPro = size !== '1K';
-  // 1K default, upgrade for 2K/4K
   const model = isPro ? 'gemini-3-pro-image-preview' : 'gemini-2.5-flash-image';
   
-  // Handle API Key selection for paid models
   if (isPro && window.aistudio) {
     const hasKey = await window.aistudio.hasSelectedApiKey();
     if (!hasKey) {
@@ -136,13 +129,12 @@ export const generateImage = async (
     }
   }
 
-  // Re-initialize client to pick up potentially new API key from environment
   const client = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   try {
     const config: any = {
       imageConfig: {
-        aspectRatio: '1:1', // Default
+        aspectRatio: '1:1',
       }
     };
 
@@ -150,7 +142,6 @@ export const generateImage = async (
       config.imageConfig.imageSize = size;
     }
 
-    // Enhance prompt to ensure image generation behavior (prevents text refusals)
     const enhancedPrompt = prompt.toLowerCase().includes('generate') 
       ? prompt 
       : `Generate an image of ${prompt}`;
@@ -161,14 +152,12 @@ export const generateImage = async (
       config
     });
 
-    // Extract image
     for (const part of response.candidates?.[0]?.content?.parts || []) {
       if (part.inlineData) {
         return `data:image/png;base64,${part.inlineData.data}`;
       }
     }
     
-    // If no image, check for text (error message from model)
     const textPart = response.text;
     if (textPart) {
       throw new Error(`Model Refusal: ${textPart}`);
@@ -189,7 +178,6 @@ export const editImage = async (
   prompt: string
 ): Promise<string> => {
   try {
-    // Correctly parse MIME type and data from Data URL
     const match = imageBase64.match(/^data:(image\/[a-z]+);base64,(.+)$/);
     if (!match) {
       throw new Error("Invalid image data format. Expected Data URL.");
@@ -218,7 +206,6 @@ export const editImage = async (
       }
     }
 
-    // If no image, check for text (error message from model)
     const textPart = response.text;
     if (textPart) {
       throw new Error(`Model Refusal: ${textPart}`);
@@ -238,6 +225,7 @@ export interface LiveCallbacks {
   onAudioData: (base64: string) => void;
   onInterrupted: () => void;
   onClose: () => void;
+  onTranscription?: (text: string) => void;
 }
 
 export const connectLive = async (
@@ -257,6 +245,11 @@ export const connectLive = async (
           callbacks.onAudioData(base64Audio);
         }
         
+        // Output Transcription
+        if (message.serverContent?.outputTranscription && callbacks.onTranscription) {
+          callbacks.onTranscription(message.serverContent.outputTranscription.text);
+        }
+        
         // Handle interruption (User barge-in)
         if (message.serverContent?.interrupted) {
           callbacks.onInterrupted();
@@ -270,11 +263,17 @@ export const connectLive = async (
     },
     config: {
       responseModalities: [Modality.AUDIO],
+      outputAudioTranscription: {}, 
       speechConfig: {
-        voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } },
+        voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } }, 
       },
-      // Instruction updated to ensure detailed explanations and greeting
-      systemInstruction: SYSTEM_INSTRUCTION + " You are a live voice assistant. Listen carefully to the customer. When they describe their needs, explain in detail why a specific generator or pump is the best fit based on power, fuel, and use case. IMPORTANT: Start the conversation immediately with a gentle, short greeting like 'Welcome to CE Generator and Pump. How can I help you today?'",
+      systemInstruction: SYSTEM_INSTRUCTION + ` 
+      MANDATORY OPENING GREETING: 
+      You MUST start the conversation with a comprehensive intro.
+      English: "Welcome to CE Generator and Pump factory, located in Kality Gabriel. We provide Weichai, Perkins, Yuchai, Yunnei, Cummins, and Kefo generators, as well as water pumps for irrigation and mineral or gold purification. How can I assist you today?"
+      Amharic: "እንኳን ወደ CE ጄነሬተር እና ፓምፕ ፋብሪካ በደህና መጡ። ፋብሪካችን ቃሊቲ ገብርኤል ይገኛል። እኛ ዌይቻይ (Weichai)፣ ፐርኪንስ (Perkins)፣ ዩቻይ (Yuchai)፣ ዩነይ (Yunnei)፣ ኩሚንስ (Cummins) እና ኬፎ (Kefo) ጄነሬተሮችን እንዲሁም ለግብርና መስኖ እና ለማዕድን ማጣሪያ የሚሆኑ የውሃ ፓምፖችን እናቀርባለን። ዛሬ እንዴት ልረዳዎ እችላለሁ?"
+      
+      Always be professional and mention the specific specialized pumps for irrigation and gold purification when relevant.`,
     },
   });
 

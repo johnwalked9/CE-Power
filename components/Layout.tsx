@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Tab, Language } from '../types';
-import { Zap, Palette, Menu, X, ClipboardList, Globe } from 'lucide-react';
+import { Zap, Palette, Menu, X, ClipboardList, Globe, Phone } from 'lucide-react';
 import { TRANSLATIONS } from '../constants';
 
 interface LayoutProps {
@@ -56,9 +56,15 @@ export const Layout: React.FC<LayoutProps> = memo(({ children, activeTab, onTabC
               <div className="bg-gradient-to-tr from-blue-500/80 to-cyan-400/80 p-2 rounded-full backdrop-blur-sm shadow-lg shadow-blue-500/20">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 tracking-wide drop-shadow-sm">
-                CE <span className="font-light">Generator & Pump</span>
-              </h1>
+              <div className="flex flex-col">
+                <h1 className="text-sm md:text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 tracking-wide drop-shadow-sm leading-none">
+                  CE <span className="font-light">Generator & Pump</span>
+                </h1>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <Phone className="w-3 h-3 text-blue-400" />
+                  <span className="text-[10px] md:text-xs font-mono text-blue-300">0966330309</span>
+                </div>
+              </div>
             </div>
 
             {/* Desktop Nav */}
