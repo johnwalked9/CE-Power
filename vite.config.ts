@@ -8,4 +8,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
+  define: {
+    // This replaces 'process.env.API_KEY' with the actual value during build
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+  },
 });
